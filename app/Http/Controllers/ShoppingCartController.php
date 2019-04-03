@@ -48,11 +48,11 @@ class ShoppingCartController extends BaseController
         }
 
         if (!$this->validateProductExistence($input['product_id'])) {
-            return $this->errorResponse('The product does not exist', [], 400);
+            return $this->errorResponse('The product does not exist');
         }
 
         if ($this->shoppingCart->where('product_id', $input['product_id'])->first() != null) {
-            return $this->errorResponse('This product has already been inserted to the shopping cart');
+            return $this->errorResponse('This product has already been inserted to the shopping cart', [], 400);
         }
 
         $shoppingCart = $this->shoppingCart->create($input);
@@ -70,7 +70,7 @@ class ShoppingCartController extends BaseController
     public function updateAmountOfProducts($productId, $amount)
     {
         if (!$this->validateProductExistence($productId)) {
-            return $this->errorResponse('The product does not exist', [], 400);
+            return $this->errorResponse('The product does not exist');
         }
 
         $shoppingCartProduct = $this->shoppingCart->where('product_id', $productId)->first();
